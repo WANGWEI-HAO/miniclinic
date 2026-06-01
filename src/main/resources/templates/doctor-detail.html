@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${doctor.name} + '醫師詳細資料 - MiniClinic'">醫師詳細資料 - MiniClinic</title>
+    <style>
+        body { font-family: "Microsoft JhengHei", sans-serif; max-width: 560px; margin: 40px auto; padding: 0 20px; }
+        h1 { color: #0F2443; border-bottom: 3px solid #14B8A6; padding-bottom: 8px; }
+        nav { background: #0F2443; padding: 12px; border-radius: 8px; margin-bottom: 24px; }
+        nav a { color: white; margin-right: 20px; text-decoration: none; font-weight: bold; }
+        nav a:hover { color: #5EEAD4; }
+        .doctor-info { background: #F8FAFC; padding: 20px; border-left: 5px solid #14B8A6; }
+        dt { font-weight: bold; color: #0F2443; margin-top: 8px; }
+        dd { margin-left: 0; margin-bottom: 4px; }
+    </style>
+</head>
+<body>
+    <nav>
+        <a th:href="@{/}">首頁</a>
+        <a th:href="@{/doctors}">醫師清單</a>
+        <a th:href="@{/appointment/new}">線上掛號</a>
+        <a th:href="@{/appointments}">掛號記錄</a>
+    </nav>
+
+    <h1 th:text="${doctor.name} + '醫師詳細資料'">醫師詳細資料</h1>
+
+    <div class="doctor-info">
+        <dl>
+            <dt>醫師編號</dt> <dd th:text="${doctor.doctorId}">D001</dd>
+            <dt>姓名</dt>    <dd th:text="${doctor.name}">陳志明醫師</dd>
+            <dt>科別</dt>    <dd th:text="${doctor.department}">家醫科</dd>
+            <dt>專長</dt>    <dd th:text="${doctor.specialty}">一般內科、慢性病管理</dd>
+        </dl>
+    </div>
+
+    <p style="margin-top: 20px;">
+        <a th:href="@{/doctors}">← 返回醫師清單</a> | <a th:href="@{/}">← 回首頁</a>
+    </p>
+</body>
+</html>

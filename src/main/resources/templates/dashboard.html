@@ -53,6 +53,9 @@
                           th:class="${'status-' + appt.status}">BOOKED</span>
                 </td>
                 <td>
+                    <button th:if="${appt.status == 'BOOKED'}" 
+                            th:data-id="${appt.apptId}"
+                            onclick="completeAppointment(this)" class="complete-button">完成</button>
                     <button th:if="${appt.status == 'BOOKED'}"
                             th:data-id="${appt.apptId}"
                             onclick="cancelAppointment(this)" class="cancel-button">取消</button>
@@ -85,6 +88,34 @@
                     alert('找不到該掛號。');
                 } else {
                     alert('取消掛號失敗，請稍後再試。');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('網路錯誤，請檢查您的連線。');
+            });
+        }
+
+        function completeAppointment(buttonElement) {
+            const apptId = buttonElement.dataset.id;
+            if (!confirm(`確定要完成掛號 ID: ${apptId} 嗎？`)) {
+                return;
+            }
+            fetch(`/api/appointments/${apptId}/status`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ status: 'COMPLETED' })
+            })
+            .then(response => {
+                if (response.ok) {
+                    alert('掛號已成功完成！');
+                    location.reload();
+                } else if (response.status === 403) {
+                    alert('您沒有權限完成此掛號。');
+                } else if (response.status === 404) {
+                    alert('找不到該掛號。');
+                } else {
+                    alert('完成掛號失敗，請稍後再試。');
                 }
             })
             .catch(error => {
